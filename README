@@ -1,3 +1,5 @@
 CFCs
 ----
 utils.SaxonXSL - Uses the Saxon-B XSLT Transformer. (supports XSLT-2 + accepts parameters). Currently not threadsafe.
+utils.XML - XML to JSON (using saxonXSL transform). 
+		  - fixArrays : removes root node if present + converts single member structs to arrays. 
