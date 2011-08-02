@@ -1,0 +1,3 @@
+{
+	"cmd": ["${packages}/ColdFusion/filesync", "${project_path}", "${file}"]
+}

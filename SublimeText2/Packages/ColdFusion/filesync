@@ -1,0 +1,17 @@
+#!/bin/sh
+SOURCE=$2
+
+case $1 in
+"/Users/njs50/Documents/apn_workspace")
+	DEST_ROOT="/Volumes/krusty"
+	;;
+*)
+	echo unknown project dir : ${1}
+	;;
+esac
+
+DEST=${2/${1}/${DEST_ROOT}}
+
+cp ${SOURCE} ${DEST}
+
+#echo ${SOURCE} ${DEST}
