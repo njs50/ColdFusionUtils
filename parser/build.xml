@@ -1,0 +1,71 @@
+<project name="ANTLR build" default="common" basedir=".">
+
+    <description>
+        Build CF ANTLR parser
+    </description>
+
+	<property name="output.dir" value="output/"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="src.dir" value="test-xml/"/>
+
+	<target name="all" depends="clean,common,test" description="builds everything" />
+
+	<target name="clean">
+
+		 <delete><fileset dir="${output.dir}"/></delete>
+		
+	</target>
+
+
+	<target name="common">
+
+		<compileANTLR filename="XMLLexer.g" />
+
+		<copy todir="${output.dir}" >
+			<fileset dir="${src.dir}">
+				<include name="*.java" />				
+			</fileset>
+		</copy>
+
+		<javac srcdir="${output.dir}" destdir="${output.dir}" includeantruntime="false">
+			<classpath>				
+				<fileset dir="lib">
+					<include name="**/*.jar"/>					
+				</fileset>			
+			</classpath>		
+		</javac>
+		
+	</target>
+
+	<target name="test" depends="common">
+
+		<java classname="MainLexer" fork="false">		
+			<classpath>
+				<pathelement path="${output.dir}"/>
+				<fileset dir="lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>								
+			<arg value="${src.dir}simpleXML.xml" />
+		</java>		
+
+	</target>
+
+
+	<macrodef name="compileANTLR" description="compile a grammar/lexar" >
+		<attribute name="filename" />
+		<sequential>
+			<java classname="org.antlr.Tool">		
+				<classpath>					
+					<fileset dir="lib">
+						<include name="**/*.jar"/>
+					</fileset>			
+				</classpath>								
+				<arg value="${src.dir}@{filename}"/>
+				<arg value="-fo"/>
+				<arg value="${output.dir}"/>				
+			</java>
+		</sequential>
+	</macrodef>	
+	
+</project>
